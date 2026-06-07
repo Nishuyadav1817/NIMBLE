@@ -2,6 +2,7 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from './assets/vite.svg'
 import './App.css'
+import { apiGet } from './lib/api'
 
 function App() {
   const [apiStatus, setApiStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
@@ -11,23 +12,19 @@ function App() {
     apiUrl: import.meta.env.VITE_API_URL || 'http://localhost:3000',
   })
 
-  const checkBackend = async () => {
-    setApiStatus('loading')
-    try {
-      const res = await fetch(`${envVars.apiUrl}/ping`)
-      if (res.ok) {
-        const data = await res.json()
-        setApiStatus('success')
-        setPingResponse(JSON.stringify(data))
-      } else {
-        setApiStatus('error')
-        setPingResponse(`Server responded with ${res.status}`)
-      }
-    } catch (err: any) {
-      setApiStatus('error')
-      setPingResponse(err.message || 'Failed to connect to backend')
-    }
+const checkBackend = async () => {
+  setApiStatus('loading')
+
+  try {
+    const data = await apiGet('/ping')
+
+    setApiStatus('success')
+    setPingResponse(JSON.stringify(data, null, 2))
+  } catch (err: any) {
+    setApiStatus('error')
+    setPingResponse(err.message || 'Failed to connect to backend')
   }
+}
 
   return (
     <div className="app-container">
