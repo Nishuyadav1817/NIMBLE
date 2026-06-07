@@ -31,6 +31,18 @@ export const schema = {
     R2_SECRET_ACCESS_KEY: { type: 'string' },
     R2_BUCKET: { type: 'string', default: 'nimble-media' },
     R2_PUBLIC_URL: { type: 'string', default: 'https://media.thenimble.in' },
+    IMAGE_MAX_UPLOAD_BYTES: {
+      type: 'string',
+      default: '10485760'
+    },
+    IMAGE_MAX_WIDTH: {
+      type: 'string',
+      default: '1920'
+    },
+    IMAGE_WEBP_QUALITY: {
+      type: 'string',
+      default: '82'
+    },
     UPSTASH_REDIS_REST_URL: { type: 'string' },
     UPSTASH_REDIS_REST_TOKEN: { type: 'string' }
   }
@@ -48,6 +60,9 @@ export interface EnvConfig {
   R2_SECRET_ACCESS_KEY: string
   R2_BUCKET: string
   R2_PUBLIC_URL: string
+  IMAGE_MAX_UPLOAD_BYTES: string
+  IMAGE_MAX_WIDTH: string
+  IMAGE_WEBP_QUALITY: string
   UPSTASH_REDIS_REST_URL: string
   UPSTASH_REDIS_REST_TOKEN: string
 }
