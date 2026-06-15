@@ -1,5 +1,5 @@
 generator client {
-  provider = "prisma-client"
+  provider = "prisma-client-js"
   output   = "../src/generated/prisma"
 }
 
@@ -63,17 +63,21 @@ model ArticleTag {
 
   @@id([articleId, tagId])
 }
+
 model Media {
   id        String   @id @default(cuid())
-
   url       String
+  key       String?
   filename  String
-
   mimeType  String
-  sizeBytes Int
+  size      Int?
+  sizeBytes Int?
+  clerkId   String?
 
-  authorId  String
-  author    User     @relation(fields: [authorId], references: [id])
+  authorId  String?
+  author    User?    @relation(fields: [authorId], references: [id])
 
   createdAt DateTime @default(now())
+
+  @@index([clerkId])
 }
