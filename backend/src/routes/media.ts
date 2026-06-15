@@ -6,7 +6,7 @@ import {
   OUTPUT_MIME_TYPE,
 } from '../lib/image.js'
 import { OwnershipError, assertMediaOwnership } from '../lib/ownership.js'
-import { prisma } from '../lib/prisma.js'
+import prisma from '../lib/prisma.js'
 import { buildPublicR2Url, deleteFromR2, uploadToR2 } from '../lib/r2.js'
 import { DEFAULT_MAX_FILE_SIZE } from '../plugins/multipart.js'
 
@@ -105,7 +105,9 @@ export default async function mediaRoutes(fastify: FastifyInstance) {
 
       try {
         const media = await assertMediaOwnership(clerkId, id)
-        await deleteFromR2(media.key)
+        if (media.key) {
+          await deleteFromR2(media.key)
+        }
         await prisma.media.delete({ where: { id: media.id } })
         return reply.code(204).send()
       } catch (err) {

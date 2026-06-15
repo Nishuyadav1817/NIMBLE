@@ -1,5 +1,5 @@
 import type { Media } from '@prisma/client'
-import { prisma } from './prisma.js'
+import prisma from './prisma.js'
 
 export class OwnershipError extends Error {
   readonly statusCode: number
@@ -32,4 +32,8 @@ export async function assertMediaOwnership(
   }
 
   return media
+}
+
+export function checkOwnership(requesterId: string, resourceAuthorId: string | null): boolean {
+  return requesterId === resourceAuthorId
 }
