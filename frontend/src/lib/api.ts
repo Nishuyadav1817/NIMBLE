@@ -1,12 +1,25 @@
 const API_URL = import.meta.env.VITE_API_URL;
 
 async function request(path: string, options: RequestInit = {}) {
+  const headers: Record<string, string> = {
+    "Content-Type": "application/json",
+    ...(options.headers as Record<string, string> || {}),
+  };
+
+  if (typeof window !== 'undefined' && (window as any).Clerk?.session) {
+    try {
+      const token = await (window as any).Clerk.session.getToken();
+      if (token) {
+        headers['Authorization'] = `Bearer ${token}`;
+      }
+    } catch (e) {
+      console.error("Error getting Clerk token", e);
+    }
+  }
+
   const res = await fetch(`${API_URL}${path}`, {
-    headers: {
-      "Content-Type": "application/json",
-      ...(options.headers || {}),
-    },
     ...options,
+    headers,
   });
 
   // IMPORTANT: safe JSON handling

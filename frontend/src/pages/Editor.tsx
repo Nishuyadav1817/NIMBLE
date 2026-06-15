@@ -23,11 +23,18 @@ export default function Editor() {
     formData.append("file", file);
 
     try {
+      const headers: Record<string, string> = {};
+      if (typeof window !== 'undefined' && (window as any).Clerk?.session) {
+        const token = await (window as any).Clerk.session.getToken();
+        if (token) headers['Authorization'] = `Bearer ${token}`;
+      }
+
       const response = await fetch(
         `${import.meta.env.VITE_API_URL}/api/media/upload`,
         {
           method: "POST",
           body: formData,
+          headers,
         }
       );
 

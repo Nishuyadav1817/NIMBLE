@@ -12,7 +12,6 @@ type Article = {
 export default function Home() {
   const [articles, setArticles] = useState<Article[]>([]);
   const [loading, setLoading] = useState(true);
-  const navigate = useNavigate();
   useEffect(() => {
     async function loadArticles() {
       try {
