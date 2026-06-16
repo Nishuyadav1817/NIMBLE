@@ -1,14 +1,15 @@
 {
-  "name": "frontend",
+  "name": "nimble-monorepo",
   "private": true,
-  "version": "0.0.0",
-  "type": "module",
-  "scripts": {
-    "dev": "vite",
-    "build": "tsc -b && vite build",
-    "lint": "eslint .",
-    "preview": "vite preview"
+  "engines": {
+    "node": ">=20.0.0"
   },
+<<<<<<< HEAD
+  "workspaces": [
+    "frontend",
+    "backend"
+  ]
+=======
   "dependencies": {
     "@clerk/clerk-react": "^5.61.8",
     "@tiptap/extension-image": "^3.26.0",
@@ -32,4 +33,5 @@
     "typescript-eslint": "^8.59.2",
     "vite": "^8.0.12"
   }
+>>>>>>> f9f7e48 (fix: resolve frontend build error)
 }

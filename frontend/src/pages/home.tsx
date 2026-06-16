@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { apiGet } from "../lib/api";
-import { useNavigate } from "react-router-dom";
+
 
 type Article = {
   id: string;
